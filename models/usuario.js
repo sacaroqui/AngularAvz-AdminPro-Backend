@@ -14,14 +14,14 @@ const UsuarioSchema = Schema({
     },
     password: {
         type: String,
-        require: true
+        required: true
     },
     img: {
         type: String,
     },
     role: {
         type: String,
-        require: true,
+        required: true,
         default: 'USER_ROLE'
     },
     google: {

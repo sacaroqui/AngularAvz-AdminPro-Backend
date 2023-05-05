@@ -23,6 +23,10 @@ dbConection();
 //Rutas
 app.use('/api/usuarios', require('./Routes/usuarios'));
 app.use('/api/login', require('./Routes/auth'));
+app.use('/api/hospitales', require('./Routes/hospitales'));
+app.use('/api/medicos', require('./Routes/medicos'));
+app.use('/api/todo', require('./Routes/busquedas'));
+app.use('/api/upload', require('./Routes/uploads'));
 
 
 app.listen(process.env.PORT, () => {
