@@ -92,14 +92,23 @@ const loginGoogle = async(req, res = response) => {
             msg: 'token de google no valido'
         })
     }
+}
 
+const renewToken = async(req, res = response) => {
+    const uid = req.uid;
 
+    //Generar TOKEN JWT
+    const jwt = await generarJWT(uid);
 
-
+    res.json({
+        ok: 'true',
+        jwt
+    })
 
 }
 
 module.exports = {
     loginUsuario,
-    loginGoogle
+    loginGoogle,
+    renewToken
 }
