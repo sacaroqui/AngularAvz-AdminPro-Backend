@@ -14,6 +14,7 @@ const getUsuarios = async(req, res) => {
 
         Usuario.count()
 
+
     ])
 
 
@@ -83,7 +84,7 @@ const actualizarUsuario = async(req, res = response) => {
 
 
         if (!usuarioDB) {
-            return res.status(404).json({
+            return res.status(400).json({
                 ok: false,
                 msg: 'No existe un usuario por ese id'
             })
@@ -95,12 +96,20 @@ const actualizarUsuario = async(req, res = response) => {
         const { password, google, email, ...campos } = req.body;
         const existeEmail = await Usuario.findOne({ email: email });
         if (existeEmail) {
-            return res.status(404).json({
+            return res.status(400).json({
                 ok: false,
                 msg: 'Ya existe un usuario con este email'
             })
         }
-        campos.email = email;
+        if (!usuarioDB.google) {
+            campos.email = email;
+        } else if (usuarioDB.email !== email) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Los usuarios de google no pueden cambiar su correo'
+            })
+        }
+
         const usuarioActualizado = await Usuario.findByIdAndUpdate(uid, campos, { new: true })
 
         res.json({
